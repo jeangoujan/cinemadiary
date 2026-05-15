@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: cinemadiary-postgres
+    environment:
+      POSTGRES_DB: cinemadiary
+      POSTGRES_USER: cinemadiary_user
+      POSTGRES_PASSWORD: cinemadiary_password
+    ports:
+      - "5432:5432"
