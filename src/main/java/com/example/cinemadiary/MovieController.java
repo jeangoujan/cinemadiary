@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger; // Логи
 import org.slf4j.LoggerFactory; // Логи
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +53,13 @@ public class MovieController {
     public MovieEntryDetailsResponse getMovieById(@PathVariable Long id){
         log.info("getMovieById was called with id: " + id);
         return movieEntryService.getMovieById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMovieById(@PathVariable Long id){
+        log.info("deleteMovieById was called with id: " + id);
+        movieEntryService.deleteMovieById(id);
     }
 
 }

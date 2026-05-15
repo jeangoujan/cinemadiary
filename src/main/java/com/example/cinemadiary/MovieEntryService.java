@@ -1,6 +1,8 @@
 package com.example.cinemadiary;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -65,5 +67,12 @@ public class MovieEntryService {
             movieEntry.getEmotionalRating(),
             movieEntry.getReview()
     );
+    }
+
+    public void deleteMovieById(Long id){
+       if (!movieEntryRepository.existsById(id)){
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found");
+       }
+       movieEntryRepository.deleteById(id);
     }
 }
