@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 @Service
 public class MovieEntryService {
@@ -53,7 +53,7 @@ public class MovieEntryService {
     }
 
     public MovieEntryDetailsResponse getMovieById(Long id){
-        MovieEntry movieEntry = movieEntryRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Element not found"));
+        MovieEntry movieEntry = movieEntryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Element not found"));
 
             return new MovieEntryDetailsResponse(
             movieEntry.getId(),
@@ -71,8 +71,58 @@ public class MovieEntryService {
 
     public void deleteMovieById(Long id){
        if (!movieEntryRepository.existsById(id)){
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found");
+       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found"); 
        }
        movieEntryRepository.deleteById(id);
+    }
+
+    public MovieEntryDetailsResponse updateMovieById(Long id, UpdateMovieRequest request){
+        MovieEntry movieEntry = movieEntryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found"));
+        if (request.getMovieName() != null) {
+            movieEntry.setMovieName(request.getMovieName());
+        }
+        if (request.getWatchDate() != null) {
+            movieEntry.setWatchDate(request.getWatchDate());
+        }
+        if (request.getGeneralRating() != null){
+            movieEntry.setGeneralRating(request.getGeneralRating());
+        }
+        if (request.getPlotRating() != null){
+            movieEntry.setPlotRating(request.getPlotRating());
+        }
+        if (request.getActingRating() != null) {
+            movieEntry.setActingRating(request.getActingRating());
+        }
+        if (request.getAtmosphereRating() != null){
+            movieEntry.setAtmosphereRating(request.getAtmosphereRating());
+        }
+        if (request.getSoundtrackRating() != null) {
+            movieEntry.setSoundtrackRating(request.getSoundtrackRating());
+        }
+        if (request.getEmotionalRating() != null) {
+            movieEntry.setEmotionalRating(request.getEmotionalRating());
+        }
+        if (request.getReview() != null) {
+            movieEntry.setReview(request.getReview());
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+
+        movieEntry.setUpdatedAt(now);
+
+        MovieEntry savedMovieEntry = movieEntryRepository.save(movieEntry);
+
+        return new MovieEntryDetailsResponse(
+            savedMovieEntry.getId(),
+            savedMovieEntry.getMovieName(),
+            savedMovieEntry.getWatchDate(),
+            savedMovieEntry.getGeneralRating(),
+            savedMovieEntry.getPlotRating(),
+            savedMovieEntry.getActingRating(),
+            savedMovieEntry.getAtmosphereRating(),
+            savedMovieEntry.getSoundtrackRating(),
+            savedMovieEntry.getEmotionalRating(),
+            savedMovieEntry.getReview()
+        );
     }
 }
