@@ -14,7 +14,7 @@ public class MovieEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String movieName;
-    private LocalDate watchDate; // посмотреть что это
+    private LocalDate watchDate; 
     private Integer generalRating;
     private Integer plotRating;
     private Integer actingRating;
