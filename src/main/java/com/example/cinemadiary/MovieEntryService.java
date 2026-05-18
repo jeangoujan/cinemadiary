@@ -41,15 +41,8 @@ public class MovieEntryService {
     public List<MovieEntryResponse> getAllMovies(){
         return movieEntryRepository.findAll()
         .stream()
-        .map(
-            movieEntry -> new MovieEntryResponse(
-                movieEntry.getId(),
-                movieEntry.getMovieName(),
-                movieEntry.getWatchDate(),
-                movieEntry.getGeneralRating(),
-                movieEntry.getReview()
-            )
-        ).toList();
+        .map(movieEntry -> toListResponse(movieEntry))
+        .toList();
     }
 
     public MovieEntryDetailsResponse getMovieById(Long id){
@@ -118,6 +111,16 @@ public class MovieEntryService {
             movieEntry.getSoundtrackRating(),
             movieEntry.getEmotionalRating(),
             movieEntry.getReview()
+        );
+    }
+
+    private MovieEntryResponse toListResponse(MovieEntry movieEntry){
+        return new MovieEntryResponse(
+                movieEntry.getId(),
+                movieEntry.getMovieName(),
+                movieEntry.getWatchDate(),
+                movieEntry.getGeneralRating(),
+                movieEntry.getReview()
         );
     }
 }
