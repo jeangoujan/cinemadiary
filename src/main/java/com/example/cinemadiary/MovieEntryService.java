@@ -55,18 +55,8 @@ public class MovieEntryService {
     public MovieEntryDetailsResponse getMovieById(Long id){
         MovieEntry movieEntry = movieEntryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Element not found"));
 
-            return new MovieEntryDetailsResponse(
-            movieEntry.getId(),
-            movieEntry.getMovieName(),
-            movieEntry.getWatchDate(),
-            movieEntry.getGeneralRating(),
-            movieEntry.getPlotRating(),
-            movieEntry.getActingRating(),
-            movieEntry.getAtmosphereRating(),
-            movieEntry.getSoundtrackRating(),
-            movieEntry.getEmotionalRating(),
-            movieEntry.getReview()
-    );
+            return toDetailsResponse(movieEntry);
+    
     }
 
     public void deleteMovieById(Long id){
@@ -112,17 +102,22 @@ public class MovieEntryService {
 
         MovieEntry savedMovieEntry = movieEntryRepository.save(movieEntry);
 
+        return toDetailsResponse(savedMovieEntry);
+    }
+
+    // Приватный метод возврата детального ответа по фильму, для устранения дубликатов в коде
+    private MovieEntryDetailsResponse toDetailsResponse(MovieEntry movieEntry){
         return new MovieEntryDetailsResponse(
-            savedMovieEntry.getId(),
-            savedMovieEntry.getMovieName(),
-            savedMovieEntry.getWatchDate(),
-            savedMovieEntry.getGeneralRating(),
-            savedMovieEntry.getPlotRating(),
-            savedMovieEntry.getActingRating(),
-            savedMovieEntry.getAtmosphereRating(),
-            savedMovieEntry.getSoundtrackRating(),
-            savedMovieEntry.getEmotionalRating(),
-            savedMovieEntry.getReview()
+            movieEntry.getId(),
+            movieEntry.getMovieName(),
+            movieEntry.getWatchDate(),
+            movieEntry.getGeneralRating(),
+            movieEntry.getPlotRating(),
+            movieEntry.getActingRating(),
+            movieEntry.getAtmosphereRating(),
+            movieEntry.getSoundtrackRating(),
+            movieEntry.getEmotionalRating(),
+            movieEntry.getReview()
         );
     }
 }
