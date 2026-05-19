@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -110,5 +111,31 @@ public class MoviePhotoService {
             savedPhoto.getFileSize()
         );
         }
+
+
+    public List<MoviePhotoResponse> getPhotosByMovieId(Long movieId){
+        if (!movieEntryRepository.existsById(movieId)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found");
+        }
+        return moviePhotoRepository.findByMovieEntryId(movieId)
+            .stream()
+            .map(moviePhoto -> toListResponse(moviePhoto))
+            .toList();
     }
+
+
+    private MoviePhotoResponse toListResponse(MoviePhoto moviePhoto){
+        return new MoviePhotoResponse(
+            moviePhoto.getId(),
+            moviePhoto.getFileName(),
+            "/" + moviePhoto.getFilePath(),
+            moviePhoto.getContentType(),
+            moviePhoto.getFileSize()
+        );
+    }
+
+    
+
+    }
+
 
