@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -39,6 +40,13 @@ public class MoviePhotoController {
     public List<MoviePhotoResponse> getPhotosByMovieId(@PathVariable Long movieId){
         log.info("getPhotosByMovieId was called for movieId: {}", movieId);
         return moviePhotoService.getPhotosByMovieId(movieId);
+    }
+
+    @DeleteMapping("/api/movies/{movieId}/photos/{photoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePhoto(@PathVariable Long movieId, @PathVariable Long photoId){
+        log.info("deletePhoto was called for photoId: {}", photoId);
+        moviePhotoService.deletePhoto(movieId, photoId);
     }
     
 }

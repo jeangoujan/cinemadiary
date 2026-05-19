@@ -124,6 +124,31 @@ public class MoviePhotoService {
     }
 
 
+    public void deletePhoto(Long movieId, Long photoId){
+        if(!movieEntryRepository.existsById(movieId)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found");
+        }
+
+        MoviePhoto moviePhoto = moviePhotoRepository.findById(photoId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Photo not found"));
+
+        if (!moviePhoto.getMovieEntry().getId().equals(movieId)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Photo not found for this movie");
+        }
+
+        Path filePath = Paths.get(moviePhoto.getFilePath());
+
+        try {
+            Files.deleteIfExists(filePath);
+        } catch (IOException exception){
+            throw new ResponseStatusException(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "Could not delete file"
+            );
+        }
+        moviePhotoRepository.delete(moviePhoto);
+    }
+
+
     private MoviePhotoResponse toListResponse(MoviePhoto moviePhoto){
         return new MoviePhotoResponse(
             moviePhoto.getId(),
