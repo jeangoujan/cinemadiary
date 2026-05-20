@@ -1,6 +1,9 @@
 package com.example.cinemadiary;
 
+import com.example.cinemadiary.photo.MoviePhotoResponse;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public class MovieEntryDetailsResponse {
     private Long id;
@@ -13,12 +16,13 @@ public class MovieEntryDetailsResponse {
     private Integer soundtrackRating;
     private Integer emotionalRating;
     private String review;
+    private List<MoviePhotoResponse> photos;
 
     public MovieEntryDetailsResponse(){
 
     }
 
-    public MovieEntryDetailsResponse(Long id, String movieName, LocalDate watchDate, Integer generalRating, Integer plotRating, Integer actingRating, Integer atmosphereRating, Integer soundtrackRating, Integer emotionalRating, String review){
+    public MovieEntryDetailsResponse(Long id, String movieName, LocalDate watchDate, Integer generalRating, Integer plotRating, Integer actingRating, Integer atmosphereRating, Integer soundtrackRating, Integer emotionalRating, String review, List<MoviePhotoResponse> photos){
         this.id = id;
         this.movieName = movieName;
         this.watchDate = watchDate;
@@ -29,6 +33,7 @@ public class MovieEntryDetailsResponse {
         this.soundtrackRating = soundtrackRating;
         this.emotionalRating = emotionalRating;
         this.review = review;
+        this.photos = photos;
     }
 
     public Long getId() {
@@ -111,5 +116,12 @@ public class MovieEntryDetailsResponse {
         this.review = review;
     }
 
+    public List<MoviePhotoResponse> getPhotos() {
+    return photos;
+    }
+
+    public void setPhotos(List<MoviePhotoResponse> photos) {
+        this.photos = photos;
+    }
     
 }

@@ -48,5 +48,4 @@ public class MoviePhotoController {
         log.info("deletePhoto was called for photoId: {}", photoId);
         moviePhotoService.deletePhoto(movieId, photoId);
     }
-    
 }

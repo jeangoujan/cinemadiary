@@ -1,4 +1,5 @@
 package com.example.cinemadiary;
+import com.example.cinemadiary.photo.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,9 +13,11 @@ import java.util.List;
 public class MovieEntryService {
 
     private final MovieEntryRepository movieEntryRepository;
+    private final MoviePhotoRepository moviePhotoRepository;
 
-    public MovieEntryService(MovieEntryRepository movieEntryRepository){
+    public MovieEntryService(MovieEntryRepository movieEntryRepository, MoviePhotoRepository moviePhotoRepository){
         this.movieEntryRepository = movieEntryRepository;
+        this.moviePhotoRepository = moviePhotoRepository;
     }
 
     public AddMovieResponse addMovie(AddMovieRequest request){
@@ -100,6 +103,16 @@ public class MovieEntryService {
 
     // Приватный метод возврата детального ответа по фильму, для устранения дубликатов в коде
     private MovieEntryDetailsResponse toDetailsResponse(MovieEntry movieEntry){
+        List<MoviePhotoResponse> photos = moviePhotoRepository.findByMovieEntryId(movieEntry.getId())
+            .stream()
+            .map(photo -> new MoviePhotoResponse(
+                photo.getId(),
+                photo.getFileName(),
+                "/" + photo.getFilePath(),
+                photo.getContentType(),
+                photo.getFileSize()
+            )).toList();
+
         return new MovieEntryDetailsResponse(
             movieEntry.getId(),
             movieEntry.getMovieName(),
@@ -110,7 +123,8 @@ public class MovieEntryService {
             movieEntry.getAtmosphereRating(),
             movieEntry.getSoundtrackRating(),
             movieEntry.getEmotionalRating(),
-            movieEntry.getReview()
+            movieEntry.getReview(),
+            photos
         );
     }
 
