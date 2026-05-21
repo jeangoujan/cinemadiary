@@ -51,6 +51,7 @@ public class MoviePhotoService {
         }
 
         long maxFileSize = 10 * 1024 * 1024;
+        
         if(file.getSize() > maxFileSize){
             throw new ResponseStatusException(
                 HttpStatus.BAD_REQUEST,
