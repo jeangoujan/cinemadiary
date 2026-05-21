@@ -49,6 +49,14 @@ public class MoviePhotoService {
                 "File is empty"
             );
         }
+
+        long maxFileSize = 10 * 1024 * 1024;
+        if(file.getSize() > maxFileSize){
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "File size must be less than 10 MB"
+            );
+        }
         
         
         Set<String> allowedContentTypes = Set.of(
