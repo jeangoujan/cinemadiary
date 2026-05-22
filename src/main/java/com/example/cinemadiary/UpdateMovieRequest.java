@@ -7,6 +7,8 @@ public class UpdateMovieRequest {
     @Size(min = 1, max = 255, message = "Movie name bust be between 1 and 255 characters.")
     private String movieName;
 
+    @Size(max = 100, message = "Genre must be less than 100 characters.")
+    private String genre;
   
     @PastOrPresent(message = "WatchDate can't be in Future.")
     private LocalDate watchDate;
@@ -52,6 +54,12 @@ public class UpdateMovieRequest {
     }
     public void setMovieName(String movieName) {
         this.movieName = movieName;
+    }
+    public String getGenre(){
+        return genre;
+    }
+    public void setGenre(String genre){
+        this.genre = genre;
     }
     public LocalDate getWatchDate() {
         return watchDate;

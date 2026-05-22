@@ -14,6 +14,7 @@ public class MovieEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String movieName;
+    private String genre;
     private LocalDate watchDate; 
     private Integer generalRating;
     private Integer plotRating;
@@ -40,6 +41,15 @@ public class MovieEntry {
     public void setMovieName(String movieName) {
         this.movieName = movieName;
     }
+
+    public String getGenre(){
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
     public LocalDate getWatchDate() {
         return watchDate;
     }
@@ -100,6 +110,5 @@ public class MovieEntry {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }
 

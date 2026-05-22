@@ -8,6 +8,7 @@ import java.util.List;
 public class MovieEntryDetailsResponse {
     private Long id;
     private String movieName;
+    private String genre;
     private LocalDate watchDate;
     private Integer generalRating;
     private Integer plotRating;
@@ -22,9 +23,10 @@ public class MovieEntryDetailsResponse {
 
     }
 
-    public MovieEntryDetailsResponse(Long id, String movieName, LocalDate watchDate, Integer generalRating, Integer plotRating, Integer actingRating, Integer atmosphereRating, Integer soundtrackRating, Integer emotionalRating, String review, List<MoviePhotoResponse> photos){
+    public MovieEntryDetailsResponse(Long id, String movieName, String genre, LocalDate watchDate, Integer generalRating, Integer plotRating, Integer actingRating, Integer atmosphereRating, Integer soundtrackRating, Integer emotionalRating, String review, List<MoviePhotoResponse> photos){
         this.id = id;
         this.movieName = movieName;
+        this.genre = genre;
         this.watchDate = watchDate;
         this.generalRating = generalRating;
         this.plotRating = plotRating;
@@ -50,6 +52,14 @@ public class MovieEntryDetailsResponse {
 
     public void setMovieName(String movieName) {
         this.movieName = movieName;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public LocalDate getWatchDate() {

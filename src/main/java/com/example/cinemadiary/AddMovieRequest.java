@@ -9,6 +9,11 @@ public class AddMovieRequest {
     @NotNull
     private String movieName;
 
+    @NotBlank(message = "Movie genre is required.")
+    @Size(max = 100, message = "Genre must be less than 100 characters.")
+    @NotNull
+    private String genre;
+
     @NotNull(message = "Watch date is required.")
     @PastOrPresent(message = "WatchDate can't be in Future.")
     private LocalDate watchDate;
@@ -53,6 +58,12 @@ public class AddMovieRequest {
     }
     public void setMovieName(String movieName) {
         this.movieName = movieName;
+    }
+    public String getGenre(){
+        return genre;
+    }
+    public void setGenre(String genre){
+        this.genre = genre;
     }
     public LocalDate getWatchDate() {
         return watchDate;

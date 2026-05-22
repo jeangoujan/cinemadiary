@@ -23,6 +23,7 @@ public class MovieEntryService {
     public AddMovieResponse addMovie(AddMovieRequest request){
         MovieEntry movieEntry = new MovieEntry();
         movieEntry.setMovieName(request.getMovieName());
+        movieEntry.setGenre(request.getGenre());
         movieEntry.setWatchDate(request.getWatchDate());
         movieEntry.setGeneralRating(request.getGeneralRating());
         movieEntry.setPlotRating(request.getPlotRating());
@@ -66,6 +67,9 @@ public class MovieEntryService {
         MovieEntry movieEntry = movieEntryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found"));
         if (request.getMovieName() != null) {
             movieEntry.setMovieName(request.getMovieName());
+        }
+        if (request.getGenre() != null) {
+            movieEntry.setGenre(request.getGenre());
         }
         if (request.getWatchDate() != null) {
             movieEntry.setWatchDate(request.getWatchDate());
@@ -116,6 +120,7 @@ public class MovieEntryService {
         return new MovieEntryDetailsResponse(
             movieEntry.getId(),
             movieEntry.getMovieName(),
+            movieEntry.getGenre(),
             movieEntry.getWatchDate(),
             movieEntry.getGeneralRating(),
             movieEntry.getPlotRating(),
@@ -132,6 +137,7 @@ public class MovieEntryService {
         return new MovieEntryResponse(
                 movieEntry.getId(),
                 movieEntry.getMovieName(),
+                movieEntry.getGenre(),
                 movieEntry.getWatchDate(),
                 movieEntry.getGeneralRating(),
                 movieEntry.getReview()

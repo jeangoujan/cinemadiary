@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class MovieEntryResponse {
     private Long id;
     private String movieName;
+    private String genre;
     private LocalDate watchDate;
     private Integer generalRating;
     private String review;
@@ -13,9 +14,10 @@ public class MovieEntryResponse {
 
     }
 
-    public MovieEntryResponse(Long id, String movieName, LocalDate watchDate, Integer generalRating, String review){
+    public MovieEntryResponse(Long id, String movieName, String genre, LocalDate watchDate, Integer generalRating, String review){
         this.id = id;
         this.movieName = movieName;
+        this.genre = genre;
         this.watchDate = watchDate;
         this.generalRating = generalRating;
         this.review = review;
@@ -35,6 +37,14 @@ public class MovieEntryResponse {
 
     public void setMovieName(String movieName) {
         this.movieName = movieName;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public LocalDate getWatchDate() {
