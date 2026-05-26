@@ -3,6 +3,9 @@ import com.example.cinemadiary.photo.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
@@ -42,12 +45,27 @@ public class MovieEntryService {
         return new AddMovieResponse(savedMovieEntry.getId(), savedMovieEntry.getMovieName());
     }
 
-    public List<MovieEntryResponse> getAllMovies(){
-        return movieEntryRepository.findAll()
-        .stream()
-        .map(movieEntry -> toListResponse(movieEntry))
-        .toList();
+
+
+    public PagedMovieResponse getAllMovies(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<MovieEntry> moviePage = movieEntryRepository.findAll(pageable);
+        List<MovieEntryResponse> items = moviePage.getContent()
+            .stream()
+            .map(this::toListResponse)
+            .toList();
+
+        return new PagedMovieResponse(
+            items,
+            moviePage.getNumber(),
+            moviePage.getSize(),
+            moviePage.getTotalElements(),
+            moviePage.getTotalPages()
+        );
     }
+
+
 
     public MovieEntryDetailsResponse getMovieById(Long id){
         MovieEntry movieEntry = movieEntryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Element not found"));

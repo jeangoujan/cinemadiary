@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.slf4j.Logger; // Логи
 import org.slf4j.LoggerFactory; // Логи
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import jakarta.validation.Valid;
 
@@ -45,9 +47,12 @@ public class MovieController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<MovieEntryResponse> getAllMovies() {
+    public PagedMovieResponse getAllMovies(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
+    ) {
         log.info("getAllMovies called");
-        return movieEntryService.getAllMovies();
+        return movieEntryService.getAllMovies(page, size);
     }
 
     @GetMapping("/{id}")
